@@ -1,0 +1,63 @@
+<div class="container-fluid text-center">
+  <!-- Imagen Empresarial -->
+  <div class="container">
+    <h2>Imagen Empresarial</h2>
+    <figure class="figure" style="width: 30%;">
+      <img src="imagenes/empresarial.jpg" class="figure-img img-fluid rounded" alt="Imagen Empresarial"/>
+      <figcaption class="figure-caption"></figcaption>
+    </figure>
+  </div>
+
+  <!-- Carrusel de Ofertas -->
+  <div class="container" style="width: 30%;">
+    <h2>Ofertas</h2>
+    <div id="carouselExampleOffers" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-inner">
+        <div *ngFor="let producto of ofertaProductos; let i = index"
+             [class]="i === 1 ? 'carousel-item active' : 'carousel-item'">
+          <img [src]="producto.imagen" class="d-block w-100" [alt]="producto.nombre">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ producto.nombre }}</h5>
+            
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleOffers" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleOffers" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Carrusel de Productos -->
+  <div class="container" style="width: 30%;">
+    <h2>Productos</h2>
+    <div id="carouselExampleProducts" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-inner">
+        <div *ngFor="let producto of productos"
+             [class]="producto.id === ofertaProductos[0]?.id ? 'carousel-item active' : 'carousel-item'">
+          <img [src]="producto.imagen" class="d-block w-100" [alt]="producto.nombre">
+          <div class="carousel-caption d-none d-md-block">
+            
+          </div>
+          <div>
+            <h6>{{ producto.nombre }}</h6>
+            <a class="btn btn-primary" (click)="onClickproducto(producto)">Ver Producto</a>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleProducts" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleProducts" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>

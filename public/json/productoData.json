@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop",
+    "imagen": "imagenes/laptop.png",
+    "precio": 700,
+    "stock": 10,
+    "description": "Una laptop de alto rendimiento diseñada tanto para el trabajo como para el entretenimiento, con un procesador potente, amplio almacenamiento y un diseño elegante y portátil."
+  },
+  {
+    "id": 2,
+    "nombre": "Iphone",
+    "imagen": "imagenes/iphone.png",
+    "precio": 1000,
+    "stock": 5,
+    "description": "Un smartphone de última generación con avanzadas capacidades de cámara, rendimiento fluido y un diseño elegante, perfecto para estar conectado en todo momento."
+
+  },
+  {
+    "id": 3,
+    "nombre": "Ipad",
+    "imagen": "imagenes/ipad.png",
+    "precio": 450,
+    "stock": 9,
+    "description": "Una tableta versátil que ofrece un rendimiento poderoso, una pantalla impresionante y una amplia gama de aplicaciones para productividad y creatividad, ideal para trabajar y jugar."
+
+  },
+  {
+    "id": 4,
+    "nombre": "Television",
+    "imagen": "imagenes/television.png",
+    "precio": 850,
+    "stock": 4,
+    "description": "Un televisor de alta definición que ofrece colores vibrantes e imágenes nítidas, con funciones inteligentes para streaming, juegos y más."
+
+  }
+]

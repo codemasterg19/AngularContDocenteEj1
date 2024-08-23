@@ -1,0 +1,24 @@
+<div class="container-fluid text-center">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/listaproducto" routerLinkActive="active">Lista Productos</a>
+        </li>
+          <li class="breadcrumb-item active" aria-current="page">{{producto?.nombre}}</li>
+        </ol>
+      </nav>
+
+    <div class="card" style="width: 18rem; " >
+        <img [src]="producto?.imagen" class="card-img-top" [alt]="producto?.nombre">
+        <div class="card-body">
+          <h5 class="card-title">{{producto?.nombre}}</h5>
+          <p class="card-text">precio: ${{producto?.precio}}</p>
+          <p class="card-text" > descripcion: {{producto?.description}} </p>
+          <p class="card-text" > stock: {{producto?.stock}} </p>
+          
+          <a class="btn btn-primary">Comprar</a>
+
+        </div>
+      </div>
+</div>

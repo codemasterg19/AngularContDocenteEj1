@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  footer {
+    margin-top: auto;
+    background-color: #343a40;
+    color: #fff;
+    padding: 0.5rem 0;
+    text-align: center;
+  }
