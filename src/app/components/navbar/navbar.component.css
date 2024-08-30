@@ -108,3 +108,9 @@ code {
   color: #e4cb58;
   font: inherit;
 }
+
+.btn-login {
+  background-color: #FF4B2B; /* Cambia el color de fondo */
+  color: white; /* Cambia el color del texto */
+  font-weight: bold;
+}
