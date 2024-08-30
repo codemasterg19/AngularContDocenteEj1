@@ -18,7 +18,8 @@ export class NavbarComponent {
   paths: Path[] = [
     { path: '/home', nombre: 'Home' },
     { path: '/listaproducto', nombre: 'Productos' },
-    { path: '/acercade', nombre: 'Nosotros' }
+    { path: '/productos', nombre: 'Catálogo' },
+    { path: '/acercade', nombre: 'Nosotros' },
   ];
   constructor(private router:Router ,private usersService:UsersService){ }
 

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Firestore, addDoc, collection, collectionData, doc, updateDoc, deleteDoc
+
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 
@@ -15,31 +17,34 @@ export interface Productos {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductosService {
 
-  private url = 'public/json/productoData.json';
-  constructor(private http: HttpClient) { }
+
+  constructor(private firestore: Firestore) { }
 
   getProductos(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.url);
+   const productosRef = collection(this.firestore, 'productos');
+   return collectionData(productosRef, {idField: 'id'}) as Observable<Productos[]>
   }
 
-  createProductos(producto: Productos): Observable<Productos> {
-  const httpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"});
-    return this.http.post<Productos>(this.url, producto, {headers: httpHeaders});
-}
+  createProductos(producto: Productos): Promise<any> {  
+    const productosRef = collection(this.firestore, 'productos');
+    return addDoc(productosRef, producto);    }
 
-updateProductos(producto: Productos): Observable<Productos> {
-  const httpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"});
-    return this.http.put<Productos>(`${this.url}/${producto.id}`, producto, {headers: httpHeaders});
-}
+  updateProductos(producto: Productos): Promise<any> {
+    const productoRef = doc(this.firestore, `productos/${producto.id}`);
+    return updateDoc(productoRef, {nombre : producto.nombre, descripcion: producto.descripcion, 
+      precio: producto.precio, imagen: producto.imagen, stock: producto.stock});
+  }
 
-deleteProductos(producto: Productos): Observable<Productos> {
-  const httpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"});
-    return this.http.delete<Productos>(`${this.url}/${producto.id}`);
-}
-}
-  
+  deleteProductos(producto: Productos): Promise<any> {
+    const productoRef = doc(this.firestore, `productos/${producto.id}`);
+    return deleteDoc(productoRef);
+  }
+
+
+  } 
+
+
+
