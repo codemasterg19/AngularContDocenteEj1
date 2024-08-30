@@ -7,32 +7,49 @@
 </head>
 <body>
 <div class="container" id="container">
+    <form [formGroup]="form">
 	<div class="form-container sign-in-container">
-		<form action="#">
+        <form [formGroup]="form">
 			<h1>Iniciar Sesion</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
+			<button class="btn btn-primary" 
+            type="button" 
+            (click)="onClickLoginWithGoogle()"
+            style="margin-inline: 10px;">
+                Entra con Google
+            </button>			
+            </div>
 			<span>o utiliza tu cuenta</span>
-			<input type="email" placeholder="Correo" />
-			<input type="password" placeholder="Contraseña" />
-			<button>Entrar</button>
-		</form>
+			<input 
+            type="email" 
+            placeholder="Correo" 
+            id="email" 
+            formControlName="email"
+            />
+            
+			<input 
+            type="password" 
+            placeholder="Contraseña" 
+            id="password" 
+            formControlName="password"
+            />
+			<button type="button" 
+            type="button" (click)="onClickLogin()"
+            >Entrar</button>
+        </form>
 	</div>
 	<div class="overlay-container">
 		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<button class="ghost" id="signIn">Sign In</button>
-			</div>
 			<div class="overlay-panel overlay-right">
 				<h1>Hola amigo</h1>
 				<p>Registrate aca</p>
-				<button class="ghost" id="signUp">Registrarse</button>
+				<button class="ghost" 
+                type="button" (click)="onClickRegister()" 
+                >Registrarse</button>
 			</div>
 		</div>
 	</div>
+</form>
 </div>
 
 </body>
