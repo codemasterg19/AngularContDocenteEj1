@@ -1,1 +1,101 @@
-<p>productos works!</p>
+<div class="container-fluid text-center">
+    <!-- <h2>{{this.pokemonsService.mensaje}}</h2>-->
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+     
+ 
+     <div class="mb-3">
+         <label for="nombre" class="form-label">Nombre del Producto</label>
+         <input type="text" 
+         [class]="form.get('nombre')?.invalid && form.get('nombre')?.touched ? 'form-control is-invalid' : 'form-control'" 
+         id="nombre" formControlName="nombre">
+         <div  class="invalid-feedback">
+           El nombre del producto es obligatorio
+         </div>
+       </div>
+ 
+       <div class="mb-3">
+         <label for="descripcion" class="form-label">Descripción</label>
+         <input type="text" 
+         [class]="form.get('descripcion')?.invalid && form.get('descripcion')?.touched ? 'form-control is-invalid' : 'form-control'" 
+          id="descripcion" formControlName="descripcion">
+          <div class="invalid-feedback">
+            <span *ngIf="form.get('descripcion')?.errors?.['required']">La descripción es obligatorio</span>
+            <span *ngIf="form.get('body')?.errors?.['minlength']">La descripción debe ser mayor a 20 caracteres</span>
+         
+        </div>
+       </div>
+
+       <div class="mb-3">
+        <label for="precio" class="form-label">Precio</label>
+        <input type="number" 
+        [class]="form.get('precio')?.invalid && form.get('precio')?.touched ? 'form-control is-invalid' : 'form-control'" 
+         id="precio" formControlName="precio">
+        <div  class="invalid-feedback">
+          El precio es obligatorio
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="imagen" class="form-label">Link de Imagen</label>
+        <input type="text" 
+        [class]="form.get('imagen')?.invalid && form.get('imagen')?.touched ? 'form-control is-invalid' : 'form-control'" 
+         id="precio" formControlName="precio">
+        <div  class="invalid-feedback">
+          El link de la imagen es obligatorio
+        </div>
+      </div>
+ 
+       <div class="mb-3">
+         <label for="stock" class="form-label">Stock</label>
+         <input type="text" 
+         [class]="form.get('stock')?.invalid && form.get('stock')?.touched ? 'form-control is-invalid' : 'form-control'" 
+         id="stock" formControlName="stock">
+         <div  class="invalid-feedback">
+            el stock es obligatorio
+          </div>
+
+       </div>
+     
+     
+     <div class="col-12">
+       <button class="btn btn-primary" type="submit">Submit form</button>
+     </div>
+   </form>
+ 
+    
+    
+    <h1>Posts</h1>
+     
+     <div class="list-group">
+         <a 
+         *ngFor="let productos of producto" 
+         class="list-group-item list-group-item-action " 
+         aria-current="true">
+           
+           <h5 class="mb-1">{{productos.nombre}}</h5>
+           <p class="mb-1">{{productos.descripcion}}</p>
+           <p class="mb-1">{{productos.precio}}</p>
+           <p class="mb-1">{{productos.imagen}}</p>
+           <p class="mb-1">{{productos.stock}}</p>
+           <!--<small>{{post.userId}}</small>-->
+           <button 
+           class="btn btn-primary" 
+           type="submit"
+           style="margin-inline: 10px;"
+           (click)="updateproducto(productos)">
+           Actualizar</button>
+ 
+           <button 
+           class="btn btn-danger" 
+           type="submit"
+           style="margin-inline: 10px;"
+           (click)="deleteproducto(productos)">
+           Eliminar</button>
+ 
+         </a>
+ 
+ 
+       </div>
+ 
+ </div>
