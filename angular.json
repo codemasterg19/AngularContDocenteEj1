@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "app-contactoDocente": {
+    "app-contactodocente": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "app-contactoDocente:build:production"
+              "buildTarget": "app-contactodocente:build:production"
             },
             "development": {
-              "buildTarget": "app-contactoDocente:build:development"
+              "buildTarget": "app-contactodocente:build:development"
             }
           },
           "defaultConfiguration": "development"
