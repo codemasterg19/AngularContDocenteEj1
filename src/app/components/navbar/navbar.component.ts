@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Path } from '../../utils/path';
 import { UsersService } from '../../services/users/users.service';
 
@@ -20,11 +20,14 @@ export class NavbarComponent {
     { path: '/listaproducto', nombre: 'Productos' },
     { path: '/acercade', nombre: 'Nosotros' }
   ];
-  constructor(private usersService:UsersService){ }
+  constructor(private router:Router ,private usersService:UsersService){ }
 
   isLogged(): boolean{
     return this.usersService.getCurrentUser()!== null;
    }
 
-   logout():void{this.usersService.logout(); }
+   logout():void{
+    this.usersService.logout();
+    this.router.navigate(['/login']);
+  }
 }
