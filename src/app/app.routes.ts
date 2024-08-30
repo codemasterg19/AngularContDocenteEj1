@@ -15,4 +15,5 @@ export const routes: Routes = [
     {path: 'acercade', component: AcercadeComponent},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component: Error404Component}
+
 ];
