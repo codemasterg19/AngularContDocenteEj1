@@ -24,22 +24,22 @@ export class ProductosService {
     return this.http.get<Productos[]>(this.url);
   }
 
-  createProductos(productos: Productos): Observable<Productos> {
+  createProductos(producto: Productos): Observable<Productos> {
   const httpHeaders = new HttpHeaders({
     "Content-Type": "application/json"});
-    return this.http.post<Productos>(this.url, productos, {headers: httpHeaders});
+    return this.http.post<Productos>(this.url, producto, {headers: httpHeaders});
 }
 
-updateProductos(productos: Productos): Observable<Productos> {
+updateProductos(producto: Productos): Observable<Productos> {
   const httpHeaders = new HttpHeaders({
     "Content-Type": "application/json"});
-    return this.http.put<Productos>(`${this.url}/${productos.id}`, productos, {headers: httpHeaders});
+    return this.http.put<Productos>(`${this.url}/${producto.id}`, producto, {headers: httpHeaders});
 }
 
-deleteProductos(productos: Productos): Observable<Productos> {
+deleteProductos(producto: Productos): Observable<Productos> {
   const httpHeaders = new HttpHeaders({
     "Content-Type": "application/json"});
-    return this.http.delete<Productos>(`${this.url}/${productos.id}`);
+    return this.http.delete<Productos>(`${this.url}/${producto.id}`);
 }
 }
   
