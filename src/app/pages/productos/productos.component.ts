@@ -23,7 +23,7 @@ export class ProductosComponent {
         imagen: ["", Validators.required],
         precio: ["", Validators.required],
         stock: ["", Validators.required],
-        description: ["", Validators.required, Validators.minLength(20)]
+        descripcion: ["", Validators.required, Validators.minLength(20)]
       })
      }
 
@@ -33,33 +33,39 @@ export class ProductosComponent {
       })
     }
 
-    onSubmit(): void {
-      const producto = this.form.value;
-      if(this.form.valid){
-        this.productosService.createProductos(producto).subscribe((producto) => {
-          this.producto.unshift(producto);
-          this.form.reset();
-        });
-      }
+    addProducto(): void {
+        if(this.form.invalid)return;{
+        this.productosService.createProductos(this.form.value)
+         .then((producto) => {
+           this.producto.push(producto);
+           this.form.reset();
+         })
+         .catch((error) => {
+           console.error(error);
+         });
+        }
     } 
 
-    updateproducto(producto: Productos): void {
-      if(this.form.invalid) return; 
-      const newProducto={
-      ...producto,
-    ...this.form.value    
-  };
-  this.productosService.updateProductos(newProducto).subscribe((producto) => {
-    const index = this.producto.findIndex(p => p.id === producto.id);
-    this.producto[index] = producto;
-  });
+    updateProducto(producto: Productos): void {
+      if(this.form.invalid)return;
+        const newProducto = {
+          ...producto,...this.form.value};
+          this.productosService.updateProductos(newProducto)
+          .then(() =>{
+            const index = this.producto.findIndex(p => p.id === newProducto.id);
+            this.producto[index] = newProducto;
+      })
+      .catch((error) => console.log(error));
+      } 
+    
 
-  }
+      deleteProducto(producto: Productos): void {
+        this.productosService.deleteProductos(producto)
+        .then(() => {
+          this.producto = this.producto.filter(p => p.id !== producto.id);
+        })
+        .catch(error => console.log(error));  
+        }
 
-  deleteproducto(producto: Productos): void {
-    this.productosService.deleteProductos(producto).subscribe(() => {
-      this.producto = this.producto.filter(p => p.id !== producto.id);
-    });
-  }
 
 }
