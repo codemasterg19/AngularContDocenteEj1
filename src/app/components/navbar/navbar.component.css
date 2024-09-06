@@ -114,3 +114,7 @@ code {
   color: white; /* Cambia el color del texto */
   font-weight: bold;
 }
+
+.btn-cart{
+  background-color: white;
+}
