@@ -2,17 +2,9 @@ import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collection, collectionData, doc, updateDoc, deleteDoc
 
 } from '@angular/fire/firestore';
+import { getDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
-
-
-export interface Productos {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  imagen: string;
-  stock: number;
-}
+import { Producto } from '../../utils/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +15,37 @@ export class ProductosService {
 
   constructor(private firestore: Firestore) { }
 
-  getProductos(): Observable<Productos[]> {
+  getProductos(): Observable<Producto[]> {
    const productosRef = collection(this.firestore, 'productos');
-   return collectionData(productosRef, {idField: 'id'}) as Observable<Productos[]>
+   return collectionData(productosRef, {idField: 'id'}) as Observable<Producto[]>
   }
 
-  createProductos(producto: Productos): Promise<any> {  
+  createProductos(producto: Producto): Promise<any> {  
     const productosRef = collection(this.firestore, 'productos');
     return addDoc(productosRef, producto);    }
 
-  updateProductos(producto: Productos): Promise<any> {
+  updateProductos(producto: Producto): Promise<any> {
     const docRef = doc(this.firestore, `productos/${producto.id}`);
     return updateDoc(docRef, {nombre : producto.nombre, descripcion: producto.descripcion, 
       precio: producto.precio, imagen: producto.imagen, stock: producto.stock});
   }
 
-  deleteProductos(producto: Productos): Promise<any> {
+  deleteProductos(producto: Producto): Promise<any> {
     const productoRef = doc(this.firestore, `productos/${producto.id}`);
     return deleteDoc(productoRef);
   }
 
-
-  } 
+  getProductoById(id: string): Promise<Producto | undefined> {
+    const productoRef = doc(this.firestore, `productos/${id}`);
+    return getDoc(productoRef).then(docSnap => {
+      if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() } as Producto;
+      } else {
+        return undefined;
+      }
+    });
+  }
+} 
 
 
 

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { Productos, ProductosService } from '../../services/productos/productos.service';
+import { ProductosService } from '../../services/productos/productos.service';
+import { Producto } from '../../utils/producto';
 
 @Component({
   selector: 'app-productos',
@@ -13,7 +13,7 @@ import { Productos, ProductosService } from '../../services/productos/productos.
 })
 export class ProductosComponent {
 
-  producto: Productos[] = [];
+  producto: Producto[] = [];
   form: FormGroup;
 
   constructor(private productosService: ProductosService, 
@@ -46,7 +46,7 @@ export class ProductosComponent {
         }
     } 
 
-    updateProducto(producto: Productos): void {
+    updateProducto(producto: Producto): void {
       if(this.form.invalid)return;
         const newProducto = {
           ...producto,...this.form.value};
@@ -59,7 +59,7 @@ export class ProductosComponent {
       } 
     
 
-      deleteProducto(producto: Productos): void {
+      deleteProducto(producto: Producto): void {
         this.productosService.deleteProductos(producto)
         .then(() => {
           this.producto = this.producto.filter(p => p.id !== producto.id);

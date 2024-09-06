@@ -1,22 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Producto } from '../../utils/producto';
-import produtoData  from '../../../../public/json/productoData.json';
-import { Router } from '@angular/router';
-import { Productos, ProductosService } from '../../services/productos/productos.service';
+import { Router, RouterModule } from '@angular/router';
+import { ProductosService } from '../../services/productos/productos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Producto } from '../../utils/producto';
 
 
 @Component({
   selector: 'app-listaproducto',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './listaproducto.component.html',
   styleUrl: './listaproducto.component.css'
 })
 export class ListaproductoComponent {
 
-  producto: Productos[] = [];
+  productos: Producto[] = [];
   form: FormGroup;
 
   constructor(private productosService: ProductosService, 
@@ -32,15 +31,15 @@ export class ListaproductoComponent {
 
      ngOnInit(): void {
       this.productosService.getProductos().subscribe((productos) => {
-        this.producto = productos;
+        this.productos = productos;
       })
     }
 
     addProducto(): void {
         if(this.form.invalid)return;{
         this.productosService.createProductos(this.form.value)
-         .then((producto) => {
-           this.producto.push(producto);
+         .then((productos) => {
+           this.productos.push(productos);
            this.form.reset();
          })
          .catch((error) => {
@@ -49,30 +48,29 @@ export class ListaproductoComponent {
         }
     } 
 
-    updateProducto(producto: Productos): void {
+    updateProducto(producto: Producto): void {
       if(this.form.invalid)return;
         const newProducto = {
           ...producto,...this.form.value};
           this.productosService.updateProductos(newProducto)
           .then(() =>{
-            const index = this.producto.findIndex(p => p.id === newProducto.id);
-            this.producto[index] = newProducto;
+            const index = this.productos.findIndex(p => p.id === newProducto.id);
+            this.productos[index] = newProducto;
       })
       .catch((error) => console.log(error));
       } 
     
 
-      deleteProducto(producto: Productos): void {
+      deleteProducto(producto: Producto): void {
         this.productosService.deleteProductos(producto)
         .then(() => {
-          this.producto = this.producto.filter(p => p.id !== producto.id);
+          this.productos = this.productos.filter(p => p.id !== producto.id);
         })
         .catch(error => console.log(error));  
         }
 
-        onClickProducto( producto: Productos): void{
-          this.router.navigate(['/listaproducto', producto.id]);  
-      
+        onClickProducto( productos: Producto): void{
+          this.router.navigate(['/listaproducto', productos.id]);
         }
 
 }

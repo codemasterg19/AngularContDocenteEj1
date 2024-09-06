@@ -12,11 +12,11 @@ export const routes: Routes = [
 
     {path: 'home', component: HomeComponent},
     {path: 'listaproducto', component: ListaproductoComponent},
-    {path: 'listaproducto/:id', component: InfoproductoComponent},
+    {path: 'infoproducto/:id', component: InfoproductoComponent},
     {path: 'login', component: LoginComponent },
     {path: 'acercade', component: AcercadeComponent},
     {path: 'productos', component: ProductosComponent},
-    { path: 'carrito', component: CarritoComponent },
+    {path: 'carrito', component: CarritoComponent},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component: Error404Component}
 
