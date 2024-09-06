@@ -33,8 +33,8 @@ export class ProductosService {
     return addDoc(productosRef, producto);    }
 
   updateProductos(producto: Productos): Promise<any> {
-    const productoRef = doc(this.firestore, `productos/${producto.id}`);
-    return updateDoc(productoRef, {nombre : producto.nombre, descripcion: producto.descripcion, 
+    const docRef = doc(this.firestore, `productos/${producto.id}`);
+    return updateDoc(docRef, {nombre : producto.nombre, descripcion: producto.descripcion, 
       precio: producto.precio, imagen: producto.imagen, stock: producto.stock});
   }
 
