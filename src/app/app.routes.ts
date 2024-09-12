@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { sessionsGuard } from './guards/sessions.guard';
+import { ContactoComponent } from './pages/contacto/contacto.component';
 
 export const routes: Routes = [
 
@@ -17,6 +18,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent },
     {path: 'acercade', component: AcercadeComponent},
     {path: 'productos', component: ProductosComponent},
+    {path: 'contacto', component: ContactoComponent},
     {path: 'carrito', component: CarritoComponent, canActivate: [sessionsGuard]},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component: Error404Component}

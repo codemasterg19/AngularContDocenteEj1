@@ -1,4 +1,59 @@
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-    background-color: black;
-}
+/* Contenedor principal para manejar el flujo de contenido */
+.container-fluid.text-center {
+    position: relative;
+    padding: 20px; /* Ajusta el espacio alrededor del contenido */
+    
+  }
+  
+  /* Contenedor de imágenes en las esquinas */
+  .corner-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Asegura que las imágenes no interfieran con otros elementos interactivos */
+  }
+  
+  .corner-img {
+    position: absolute;
+    width: 150px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    border: 2px solid #fff; /* Borde blanco para resaltar sobre la imagen de fondo */
+  }
+  
+  .corner-top-left {
+    top: 20px;
+    left: 20px;
+  }
+  
+  .corner-top-right {
+    top: 20px;
+    right: 20px;
+  }
+  
+  .corner-bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .corner-bottom-right {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+/* Imagen Principal en el Centro */
+.center-image-container {
+    position: relative;
+    margin: 20px auto; /* Ajusta el margen según sea necesario */
+    max-width: 60%; /* Ajusta el ancho máximo según tu diseño, reduce de 80% a 60% */
+  }
+  
+  .center-image {
+    width: 20%; /* Ocupa todo el ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border: 2px solid #ddd; /* Borde sutil para la imagen principal */
+    border-radius: 8px; /* Bordes redondeados para la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil para resaltar la imagen */
+  }
+
