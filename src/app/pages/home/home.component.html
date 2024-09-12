@@ -14,11 +14,11 @@
     <div id="carouselExampleOffers" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner">
         <div *ngFor="let producto of ofertaProductos; let i = index"
-             [class]="i === 1 ? 'carousel-item active' : 'carousel-item'">
+          [class]="i === 0 ? 'carousel-item active' : 'carousel-item'">
           <img [src]="producto.imagen" class="d-block w-100" [alt]="producto.nombre">
-          <div class="carousel-caption d-none d-md-block">
+          <div>
             <h5>{{ producto.nombre }}</h5>
-            
+            <a [routerLink]="['/producto', producto.id]" class="btn btn-primary">Ver Producto</a>
           </div>
         </div>
       </div>
@@ -38,15 +38,12 @@
     <h2>Productos</h2>
     <div id="carouselExampleProducts" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner">
-        <div *ngFor="let producto of productos"
-             [class]="producto.id === ofertaProductos[0]?.id ? 'carousel-item active' : 'carousel-item'">
+        <div *ngFor="let producto of productos; let i = index"
+          [class]="i === 0 ? 'carousel-item active' : 'carousel-item'">
           <img [src]="producto.imagen" class="d-block w-100" [alt]="producto.nombre">
-          <div class="carousel-caption d-none d-md-block">
-            
-          </div>
           <div>
-            <h6>{{ producto.nombre }}</h6>
-            <a class="btn btn-primary" (click)="onClickproducto(producto)">Ver Producto</a>
+            <h5>{{ producto.nombre }}</h5>
+            <a [routerLink]="['/producto', producto.id]" class="btn btn-primary">Ver Producto</a>
           </div>
         </div>
       </div>

@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-
 import { Producto } from '../../utils/producto';
-import produtoData  from '../../../../public/json/productoData.json';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { ProductosService } from '../../services/productos/productos.service';
 
 function randomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -11,33 +10,33 @@ function randomInt(max: number) {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
-  productos: Producto[] = produtoData as Producto[];
-
+  productos: Producto[] = [];
   ofertaProductos: Producto[] = [];
 
-  constructor(private router: Router) { 
-    this.selectOfertaProductos();
+  constructor(private router: Router, private productosService: ProductosService) {
   }
 
-
+  ngOnInit(): void {
+    this.productosService.getProductos().subscribe((productos) => {
+      this.productos = productos;
+      this.selectOfertaProductos();
+    })
+  }
   
   // Función para seleccionar dos productos aleatorios sin duplicados
   selectOfertaProductos() {
+    const numProductosOferta = Math.ceil(this.productos.length * 0.3);
     const indices = new Set<number>();
-    while (indices.size < 2) {
+    while (indices.size < numProductosOferta && this.productos.length > 0) {
       indices.add(randomInt(this.productos.length));
     }
     this.ofertaProductos = Array.from(indices).map(index => this.productos[index]);
   }
- 
-  onClickproducto(producto: Producto): void{
-    this.router.navigate(['/listaproducto', producto.id]);
 
-  }
 }

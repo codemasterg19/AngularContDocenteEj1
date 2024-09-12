@@ -12,7 +12,7 @@ export const routes: Routes = [
 
     {path: 'home', component: HomeComponent},
     {path: 'listaproducto', component: ListaproductoComponent},
-    {path: 'infoproducto/:id', component: InfoproductoComponent},
+    {path: 'producto/:id', component: InfoproductoComponent},
     {path: 'login', component: LoginComponent },
     {path: 'acercade', component: AcercadeComponent},
     {path: 'productos', component: ProductosComponent},
