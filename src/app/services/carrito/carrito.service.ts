@@ -5,7 +5,6 @@ import { Producto } from '../../utils/producto';
   providedIn: 'root'
 })
 export class CarritoService {
-
   private carrito: Producto[] = [];
 
   constructor() { }
