@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-
+import { Carrito } from '../../utils/producto';
  
 export interface AccessToken {
   access_token: string;
@@ -37,7 +37,6 @@ export interface Payment {
     payment_method: string;
     payer_info: {
       shipping_address: {
-       
       }
     }
   }
@@ -88,6 +87,7 @@ export interface Payment {
   providedIn: 'root'
 })
 export class PaypalService {
+
   urlToken = 'https://api.sandbox.paypal.com/v1/oauth2/token';
   urlPaymentExperience = 'https://api-m.sandbox.paypal.com/v1/payment-experience/web-profiles/';
   urlPayment = 'https://api-m.sandbox.paypal.com/v1/payments/payment';
@@ -133,12 +133,20 @@ export class PaypalService {
     return this.http.post<WebProfile>(this.urlPaymentExperience, body, { headers });
   }
  
-  createPayment(accessToken: string, experience_profile_id: string, return_url: string, cancel_url: string): Observable<Payment> {
+  createPayment(accessToken: string, experience_profile_id: string, carrito: Carrito[], total: string, currency: string, return_url: string, cancel_url: string): Observable<Payment> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`
     });
- 
+    // Mapeamos los productos del carrito a la estructura que PayPal espera
+    const items = carrito.map(item => ({
+      name: item.producto.nombre,
+      quantity: item.cantidad.toString(), // Usamos la cantidad en el carrito
+      price: item.producto.precio.toString(),
+      sku: item.producto.id,
+      currency
+    }));
+    
     const body = {
       intent: 'authorize',
       experience_profile_id,
@@ -147,44 +155,16 @@ export class PaypalService {
       },
       transactions: [{
         amount: {
-          currency: 'DKK',
-          total: '41.15',
+          currency,
+          total,
           details: {
-            shipping: '11',
-            subtotal: '30',
-            tax: '0.15'
+            shipping: '0', // Ajusta esto si tienes envío
+            subtotal: total, // Total sin el envío
           }
         },
-        payee: {
-          email: 'merchant@example.com'
-        },
-        description: 'This is the payment transaction description.',
+        description: 'Pago del carrito de compras',
         item_list: {
-          items: [
-            {
-              name: 'Basketball Team Jersey',
-              quantity: '5',
-              price: '3',
-              sku: '1',
-              currency: 'DKK'
-            },
-            {
-              name: 'Sequined Shirt',
-              quantity: '1',
-              price: '15',
-              sku: 'product34',
-              currency: 'DKK'
-            }
-          ],
-          shipping_address: {
-            recipient_name: 'Betsy customer',
-            line1: '111 First Street',
-            city: 'Saratoga',
-            country_code: 'US',
-            postal_code: '95070',
-            phone: '0116519999164',
-            state: 'CA'
-          }
+          items,
         }
       }],
       redirect_urls: {
@@ -194,6 +174,6 @@ export class PaypalService {
     };
  
     return this.http.post<Payment>(this.urlPayment, body, { headers });
-  }  
- 
+  }
+
 }
