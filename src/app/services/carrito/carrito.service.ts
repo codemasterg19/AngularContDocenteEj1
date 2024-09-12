@@ -43,6 +43,10 @@ export class CarritoService {
     }
   }
 
+  eliminarProducto(id: string): void {
+    this.carrito = this.carrito.filter(item => item.producto.id !== id);
+  }
+
   calcularTotal(): number {
     return this.carrito.reduce((total, item) => total + item.producto.precio * item.cantidad, 0);
   }

@@ -28,7 +28,7 @@
           <p class="card-text">Precio: ${{ item.producto.precio }}</p>
           <p class="card-text">Descripción: {{ item.producto.descripcion }}</p>
           <p class="card-text">Stock: {{ item.producto.stock }}</p>
-          <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center justify-content-between mb-2">
             <button
               class="btn btn-outline-info"
               (click)="decrementarCantidad(item.producto, item.cantidad)"
@@ -43,6 +43,7 @@
               +
             </button>
           </div>
+          <button class="btn btn-danger" (click)="eliminarProducto(item.producto.id)">Eliminar producto</button>
         </div>
       </div>
     </div>

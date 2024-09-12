@@ -44,6 +44,11 @@ export class CarritoComponent implements OnInit{
     }
   }
 
+  eliminarProducto(id: string): void {
+    this.carritoService.eliminarProducto(id);
+    this.carrito = this.carritoService.obtenerCarrito(); // Actualizar vista
+  }
+  
   vaciarCarrito(): void {
     this.carritoService.vaciarCarrito();
     this.carrito = [];
