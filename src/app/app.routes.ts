@@ -7,16 +7,17 @@ import { InfoproductoComponent } from './pages/infoproducto/infoproducto.compone
 import { LoginComponent } from './pages/login/login.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
+import { sessionsGuard } from './guards/sessions.guard';
 
 export const routes: Routes = [
 
     {path: 'home', component: HomeComponent},
     {path: 'listaproducto', component: ListaproductoComponent},
-    {path: 'producto/:id', component: InfoproductoComponent},
+    {path: 'producto/:id', component: InfoproductoComponent, canActivate: [sessionsGuard]},
     {path: 'login', component: LoginComponent },
     {path: 'acercade', component: AcercadeComponent},
     {path: 'productos', component: ProductosComponent},
-    {path: 'carrito', component: CarritoComponent},
+    {path: 'carrito', component: CarritoComponent, canActivate: [sessionsGuard]},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', component: Error404Component}
 
