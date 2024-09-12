@@ -1,3 +1,8 @@
+export interface Carrito {
+  producto: Producto;
+  cantidad: number;
+}
+
 export interface Producto {
     id: string;
     nombre: string;
@@ -5,4 +10,4 @@ export interface Producto {
     precio: number;
     imagen: string;
     stock: number;
-  }
+}

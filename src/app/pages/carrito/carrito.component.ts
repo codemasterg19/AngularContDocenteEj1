@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../../utils/producto';
+import { Carrito, Producto } from '../../utils/producto';
 import { CarritoService } from '../../services/carrito/carrito.service';
 import { CommonModule } from '@angular/common';
+import { ProductosService } from '../../services/productos/productos.service';
 import { ActivatedRoute } from '@angular/router';
 import { PaypalService } from '../../services/paypal/paypal.service';
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule, ], 
+  imports: [CommonModule],
   templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.css']
+  styleUrl: './carrito.component.css'
 })
-export class CarritoComponent implements OnInit {
-  carrito: Producto[] = [];
+export class CarritoComponent implements OnInit{
+  
+  carrito: Carrito[] = [];
 
-  constructor(
-    private carritoService: CarritoService,
-    private route: ActivatedRoute,
-    private paypalService: PaypalService
-  ) {}
+  constructor(private carritoService: CarritoService, private productosService: ProductosService, private route: ActivatedRoute, private paypalService: PaypalService) { }
 
   ngOnInit(): void {
     this.carrito = this.carritoService.obtenerCarrito();
@@ -28,13 +26,36 @@ export class CarritoComponent implements OnInit {
     });
   }
 
+  incrementarCantidad(producto : Producto, cantidad: number): void {
+    if (cantidad < producto.stock) {
+      this.carritoService.actualizarCantidad(producto.id, cantidad + 1);
+      this.carrito = this.carritoService.obtenerCarrito();
+    } else {
+      alert('No puedes agregar más de este producto. Stock máximo alcanzado.');
+    }
+  }
+
+  decrementarCantidad(producto : Producto, cantidad: number): void {
+    if (cantidad > 1) {
+      this.carritoService.actualizarCantidad(producto.id, cantidad - 1);
+      this.carrito = this.carritoService.obtenerCarrito();
+    } else {
+      alert('La cantidad no puede ser menor a 1.');
+    }
+  }
+
+  eliminarProducto(id: string): void {
+    this.carritoService.eliminarProducto(id);
+    this.carrito = this.carritoService.obtenerCarrito(); // Actualizar vista
+  }
+  
   vaciarCarrito(): void {
     this.carritoService.vaciarCarrito();
     this.carrito = [];
   }
 
   calcularTotal(): number {
-    return this.carrito.reduce((total, producto) => total + producto.precio, 0);
+    return this.carritoService.calcularTotal();
   }
 
   pagar(): void {
@@ -57,4 +78,5 @@ export class CarritoComponent implements OnInit {
       });
     });
   }
+
 }

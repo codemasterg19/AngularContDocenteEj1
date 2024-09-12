@@ -30,6 +30,11 @@ export class ProductosService {
       precio: producto.precio, imagen: producto.imagen, stock: producto.stock});
   }
 
+  updateProductoStock(id: string, nuevoStock: number): Promise<any> {
+    const docRef = doc(this.firestore, `productos/${id}`);
+    return updateDoc(docRef, { stock: nuevoStock });
+  }
+
   deleteProductos(producto: Producto): Promise<any> {
     const productoRef = doc(this.firestore, `productos/${producto.id}`);
     return deleteDoc(productoRef);
