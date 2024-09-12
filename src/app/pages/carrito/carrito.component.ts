@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../../utils/producto';
+import { Carrito, Producto } from '../../utils/producto';
 import { CarritoService } from '../../services/carrito/carrito.service';
 import { CommonModule } from '@angular/common';
 import { ProductosService } from '../../services/productos/productos.service';
@@ -15,13 +15,12 @@ import { PaypalService } from '../../services/paypal/paypal.service';
 })
 export class CarritoComponent implements OnInit{
   
-  producto: Producto[] = [];
-  cantidad: number = 1;
+  carrito: Carrito[] = [];
 
   constructor(private carritoService: CarritoService, private productosService: ProductosService, private route: ActivatedRoute, private paypalService: PaypalService) { }
 
   ngOnInit(): void {
-    this.producto = this.carritoService.obtenerCarrito();
+    this.carrito = this.carritoService.obtenerCarrito();
     this.route.queryParams.subscribe(params => {
       console.log(params['paymentId']);
     });
@@ -30,6 +29,7 @@ export class CarritoComponent implements OnInit{
   incrementarCantidad(producto : Producto, cantidad: number): void {
     if (cantidad < producto.stock) {
       this.carritoService.actualizarCantidad(producto.id, cantidad + 1);
+      this.carrito = this.carritoService.obtenerCarrito();
     } else {
       alert('No puedes agregar más de este producto. Stock máximo alcanzado.');
     }
@@ -38,6 +38,7 @@ export class CarritoComponent implements OnInit{
   decrementarCantidad(producto : Producto, cantidad: number): void {
     if (cantidad > 1) {
       this.carritoService.actualizarCantidad(producto.id, cantidad - 1);
+      this.carrito = this.carritoService.obtenerCarrito();
     } else {
       alert('La cantidad no puede ser menor a 1.');
     }
@@ -45,12 +46,11 @@ export class CarritoComponent implements OnInit{
 
   vaciarCarrito(): void {
     this.carritoService.vaciarCarrito();
-    this.producto = [];
-    this.cantidad = 1;
+    this.carrito = [];
   }
 
   calcularTotal(): number {
-    return this.producto.reduce((total, producto) => total + producto.precio, 0);
+    return this.carritoService.calcularTotal();
   }
 
   pagar(): void {
