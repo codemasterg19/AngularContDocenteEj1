@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ProductosService } from '../../services/productos/productos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '../../utils/producto';
@@ -19,7 +19,7 @@ export class ListaproductoComponent {
   form: FormGroup;
 
   constructor(private productosService: ProductosService, 
-    private formBuilder: FormBuilder, private router: Router) {
+    private formBuilder: FormBuilder) {
       this.form = this.formBuilder.group({
         nombre: ["", Validators.required],
         imagen: ["", Validators.required],
@@ -67,10 +67,6 @@ export class ListaproductoComponent {
           this.productos = this.productos.filter(p => p.id !== producto.id);
         })
         .catch(error => console.log(error));  
-        }
-
-        onClickProducto( productos: Producto): void{
-          this.router.navigate(['/listaproducto', productos.id]);
         }
 
 }
