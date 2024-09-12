@@ -59,11 +59,15 @@ export class CarritoComponent implements OnInit{
   }
 
   pagar(): void {
+    const total = this.calcularTotal();
     this.paypalService.getAccessToken().subscribe(accessToken => {
       this.paypalService.createWebProfile(accessToken.access_token, `Pago-${Math.random()}`).subscribe(webProfile => {
         this.paypalService.createPayment(
           accessToken.access_token,
           webProfile.id,
+          this.carrito,
+          total.toString(), // Usa el total dinámico
+          "USD", // Cambia la moneda según sea necesario
           "http://localhost:4200/home",
           "http://localhost:4200/login"
         ).subscribe(payment => {
@@ -71,10 +75,23 @@ export class CarritoComponent implements OnInit{
           const approvalUrl = payment.links?.find(link => link.rel === 'approval_url')?.href;
           if (approvalUrl) {
             window.location.href = approvalUrl;
+            this.actualizarStock();
+            this.vaciarCarrito();
           } else {
-            console.error('Approval URL not found');
+            console.error('URL de aprobación no encontrada');
           }
         });
+      });
+    });
+  }
+
+  actualizarStock(): void {
+    this.carrito.forEach(item => {
+      const nuevoStock = item.producto.stock - item.cantidad;
+      this.productosService.updateProductoStock(item.producto.id, nuevoStock).then(() => {
+        console.log(`Stock actualizado para ${item.producto.nombre}`);
+      }).catch(error => {
+        console.error(`Error actualizando el stock para ${item.producto.nombre}:`, error);
       });
     });
   }
