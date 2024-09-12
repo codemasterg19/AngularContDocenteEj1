@@ -1,25 +1,25 @@
 <div class="container">
-    <h2>Carrito de Compras</h2>
-    
-    <div *ngIf="carrito.length > 0; else emptyCarrito">
-      <div *ngFor="let producto of carrito" class="card mb-3" style="width: 18rem;">
-        <img [src]="producto.imagen" class="card-img-top" [alt]="producto.nombre">
-        <div class="card-body">
-          <h5 class="card-title">{{producto.nombre}}</h5>
-          <p class="card-text">Precio: ${{producto.precio}}</p>
-          <p class="card-text">Descripción: {{producto.descripcion}}</p>
-          <p class="card-text">Stock: {{producto.stock}}</p>
-        </div>
-      </div>
-      
-      <div class="d-flex justify-content-between">
-        <h3>Total: ${{calcularTotal()}}</h3>
-        <button class="btn btn-danger" (click)="vaciarCarrito()">Vaciar Carrito</button>
+  <h2>Carrito de Compras</h2>
+  
+  <div *ngIf="carrito.length > 0; else emptyCarrito">
+    <div *ngFor="let producto of carrito" class="card mb-3" style="width: 18rem;">
+      <img [src]="producto.imagen" class="card-img-top" [alt]="producto.nombre">
+      <div class="card-body">
+        <h5 class="card-title">{{producto.nombre}}</h5>
+        <p class="card-text">Precio: ${{producto.precio}}</p>
+        <p class="card-text">Descripción: {{producto.descripcion}}</p>
+        <p class="card-text">Stock: {{producto.stock}}</p>
       </div>
     </div>
     
-    <ng-template #emptyCarrito>
-      <p>Tu carrito está vacío.</p>
-    </ng-template>
+    <div class="d-flex justify-content-between">
+      <h3>Total: ${{calcularTotal()}}</h3>
+      <button class="btn btn-danger" (click)="vaciarCarrito()">Vaciar Carrito</button>
+      <button class="btn btn-primary" (click)="pagar()">Pagar</button>
+    </div>
   </div>
   
+  <ng-template #emptyCarrito>
+    <p>Tu carrito está vacío.</p>
+  </ng-template>
+</div>

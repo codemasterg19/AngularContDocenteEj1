@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../../utils/producto';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-
   private cart: Producto[] = [];
 
   constructor() {}
@@ -23,6 +21,7 @@ export class CartService {
       this.cart.push({ ...producto });
     }
   }
+
   getTotalPrice(): number {
     return this.cart.reduce((total, producto) => total + producto.precio * producto.stock, 0);
   }

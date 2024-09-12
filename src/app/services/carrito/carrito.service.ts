@@ -12,7 +12,6 @@ interface CarritoItem {
   providedIn: 'root'
 })
 export class CarritoService {
-
   private carrito: Producto[] = [];
 
   constructor() { }
