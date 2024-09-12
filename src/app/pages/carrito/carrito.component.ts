@@ -9,11 +9,11 @@ import { PaypalService } from '../../services/paypal/paypal.service';
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule, ], 
+  imports: [CommonModule],
   templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.css']
+  styleUrl: './carrito.component.css'
 })
-export class CarritoComponent {
+export class CarritoComponent implements OnInit{
   
   producto: Producto[] = [];
   cantidad: number = 1;
@@ -73,4 +73,5 @@ export class CarritoComponent {
       });
     });
   }
+
 }
