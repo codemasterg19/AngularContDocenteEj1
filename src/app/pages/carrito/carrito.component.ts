@@ -16,6 +16,7 @@ import { PaypalService } from '../../services/paypal/paypal.service';
 export class CarritoComponent implements OnInit{
   
   carrito: Carrito[] = [];
+  loading: boolean = false;
 
   constructor(private carritoService: CarritoService, private productosService: ProductosService, private route: ActivatedRoute, private paypalService: PaypalService) { }
 
@@ -59,6 +60,7 @@ export class CarritoComponent implements OnInit{
   }
 
   pagar(): void {
+    this.loading = true;
     const total = this.calcularTotal();
     this.paypalService.getAccessToken().subscribe(accessToken => {
       this.paypalService.createWebProfile(accessToken.access_token, `Pago-${Math.random()}`).subscribe(webProfile => {
@@ -68,20 +70,29 @@ export class CarritoComponent implements OnInit{
           this.carrito,
           total.toString(), // Usa el total dinámico
           "USD", // Cambia la moneda según sea necesario
-          "http://localhost:4200/home",
-          "http://localhost:4200/login"
+          "http://localhost:4200/factura",
+          "http://localhost:4200/listaproducto"
         ).subscribe(payment => {
           console.log(payment.id);
           const approvalUrl = payment.links?.find(link => link.rel === 'approval_url')?.href;
           if (approvalUrl) {
             window.location.href = approvalUrl;
             this.actualizarStock();
-            this.vaciarCarrito();
           } else {
             console.error('URL de aprobación no encontrada');
           }
+          this.loading = false;  // Oculta el spinner de carga cuando termine
+        }, error => {
+          console.error('Error en la creación del pago:', error);
+          this.loading = false;  // Oculta el spinner en caso de error
         });
+      }, error => {
+        console.error('Error en la creación del perfil:', error);
+        this.loading = false;  // Oculta el spinner en caso de error
       });
+    }, error => {
+      console.error('Error en la obtención del token:', error);
+      this.loading = false;  // Oculta el spinner en caso de error
     });
   }
 

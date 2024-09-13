@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Carrito, Producto } from '../../utils/producto';
+import { Firestore, collection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Carrito, Producto } from '../../utils/producto';
 export class CarritoService {
   private carrito: Carrito[] = [];
 
-  constructor() { }
+  constructor( private firestore: Firestore) { }
 
   agregarProducto(producto: Producto, cantidad: number = 1): void {
     const existingItem = this.carrito.find(item => item.producto.id === producto.id);
@@ -21,7 +22,7 @@ export class CarritoService {
       if (cantidad <= producto.stock) {
         this.carrito.push({ producto, cantidad });
       } else {
-        alert('Cantidad excede el stock disponible.');
+        alert('Stock agotado');
       }
     }
   }
@@ -50,4 +51,5 @@ export class CarritoService {
   calcularTotal(): number {
     return this.carrito.reduce((total, item) => total + item.producto.precio * item.cantidad, 0);
   }
+
 }

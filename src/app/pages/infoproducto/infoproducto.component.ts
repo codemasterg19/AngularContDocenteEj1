@@ -7,7 +7,7 @@ import { CarritoService } from '../../services/carrito/carrito.service';
 @Component({
   selector: 'app-infoproducto',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive,],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './infoproducto.component.html',
   styleUrls: ['./infoproducto.component.css']
 })

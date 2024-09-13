@@ -49,7 +49,10 @@
     </div>
     <div class="d-flex justify-content-around mt-4">
       <h3>Total: ${{ calcularTotal() }}</h3>
-      <button class="btn btn-primary" (click)="pagar()">Pagar</button>
+      <button class="btn btn-primary" (click)="pagar()" [disabled]="loading">
+        <span *ngIf="!loading">Pagar</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
       <button class="btn btn-danger me-2" (click)="vaciarCarrito()">
         Vaciar Carrito
       </button>
